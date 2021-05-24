@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Wizytownik</string>
+    <string name="tworzenie_nowej_wizyt_wki">Tworzenie nowej wizytówki</string>
+    <string name="nazwa_wizyt_wki">Nazwa wizytówki</string>
+    <string name="nazwa">Nazwa</string>
 </resources>
