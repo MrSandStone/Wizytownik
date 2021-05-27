@@ -32,7 +32,7 @@ public class CreateNewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_new);
+        setContentView(R.layout.activity_create_new);
 
         selectedImageView = findViewById(R.id.selectedImage);
         title = findViewById(R.id.editTextTitleBusinessCard);
@@ -54,6 +54,7 @@ public class CreateNewActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK && requestCode == PICK_IMAGE){
             try {
+                assert data != null;
                 imageUri = data.getData();
                 bmpImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                 selectedImageView.setImageBitmap(bmpImage);
@@ -86,6 +87,7 @@ public class CreateNewActivity extends AppCompatActivity {
             ).show();
         }
     }
+
 
 
 }
