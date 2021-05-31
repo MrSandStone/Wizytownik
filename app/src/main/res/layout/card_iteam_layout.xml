@@ -8,11 +8,10 @@
     app:cardCornerRadius="20dp"
     android:layout_margin="15dp"
     app:cardElevation="10dp">
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_margin="15dp"
-            android:layout_height="150dp">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/idCardImage"
@@ -21,7 +20,6 @@
                 android:layout_gravity="center"
                 android:contentDescription="Backgroud business card"
                 tools:ignore="HardcodedText" />
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -29,7 +27,6 @@
                 android:orientation="vertical"
                 android:layout_gravity="left"
                 tools:ignore="RtlHardcoded">
-
                 <TextView
                     android:id="@+id/idCardTitle"
                     android:layout_width="wrap_content"
@@ -38,7 +35,6 @@
                     android:textSize="30sp"
                     android:textStyle="bold"
                     tools:ignore="HardcodedText" />
-
                 <TextView
                     android:id="@+id/cardPhoneNumber"
                     android:layout_width="wrap_content"
@@ -54,7 +50,6 @@
                     android:textSize="20sp"
                     tools:ignore="HardcodedText" />
 
-
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -63,14 +58,37 @@
                 android:orientation="vertical"
                 android:layout_gravity="right"
                 tools:ignore="RtlHardcoded">
-
                 <TextView
-                    android:id="@+id/carddescription"
+                    android:id="@+id/cardDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Description"
                     android:textSize="20sp"
                     tools:ignore="HardcodedText" />
+
+                <Button
+                    android:id="@+id/cardButtonDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text="Usuń"
+                    android:textSize="10sp"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_margin="10dp"/>
+            <Button
+                android:id="@+id/cardButtonEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edytuj"
+                android:textSize="10sp"
+                android:layout_gravity="bottom"
+                tools:ignore="HardcodedText" />
+
         </FrameLayout>
 </androidx.cardview.widget.CardView>
