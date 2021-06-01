@@ -17,6 +17,12 @@ public class DataConverter {
     }
 
     public static Bitmap convertByteArrayToBitmap(byte[] bytes){
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        try {
+            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

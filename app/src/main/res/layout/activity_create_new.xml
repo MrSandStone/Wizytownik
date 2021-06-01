@@ -7,33 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".CreateNewActivity">
 
-    <TextView
-        android:id="@+id/title_create_new"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/tworzenie_nowej_wizyt_wki"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
     <EditText
         android:id="@+id/editTextTitleBusinessCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/nazwa"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_create_new" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextPhone"
@@ -83,8 +71,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/selectedImage"
-        android:onClick="takePictureFromGallery"
         tools:ignore="OnClick" />
+        <!--android:onClick="takePictureFromGallery"-->
+
 
     <EditText
         android:id="@+id/editTextTextDescription"
@@ -100,7 +89,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/takePicture" />
-
+<!--
     <Button
         android:id="@+id/saveBusinessCard"
         android:layout_width="wrap_content"
@@ -110,6 +99,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextDescription" />
-
+-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

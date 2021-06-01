@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardBackgroundColor="@android:color/darker_gray"
     app:cardCornerRadius="20dp"
@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Title"
-                    android:textSize="30sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     tools:ignore="HardcodedText" />
                 <TextView
@@ -40,14 +40,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Phone Number"
-                    android:textSize="20sp"
+                    android:textSize="10sp"
                     tools:ignore="HardcodedText" />
                 <TextView
                     android:id="@+id/cardAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Address"
-                    android:textSize="20sp"
+                    android:textSize="10sp"
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
@@ -63,7 +63,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Description"
-                    android:textSize="20sp"
+                    android:textSize="10sp"
+                    tools:ignore="HardcodedText" />
+
+                <Button
+                    android:id="@+id/cardButtonEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text="Edytuj"
+                    android:textSize="10sp"
                     tools:ignore="HardcodedText" />
 
                 <Button
@@ -81,14 +90,6 @@
                 android:orientation="horizontal"
                 android:gravity="center"
                 android:layout_margin="10dp"/>
-            <Button
-                android:id="@+id/cardButtonEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edytuj"
-                android:textSize="10sp"
-                android:layout_gravity="bottom"
-                tools:ignore="HardcodedText" />
 
         </FrameLayout>
 </androidx.cardview.widget.CardView>

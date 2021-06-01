@@ -53,8 +53,9 @@ public class CreateNewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new);
 
+
         takePicture = findViewById(R.id.takePicture);
-        saveBusinessCardButton = findViewById(R.id.saveBusinessCard);
+
 
         selectedImageView = findViewById(R.id.selectedImage);
         title = findViewById(R.id.editTextTitleBusinessCard);
@@ -64,19 +65,19 @@ public class CreateNewActivity extends AppCompatActivity {
 
         takePicture.setOnClickListener(view -> takePictureFromGallery());
 
-        saveBusinessCardButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                saveBusinessCard();
-            }
-        });
+//        saveBusinessCardButton.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View view){
+//                saveBusinessCard();
+//            }
+//        });
     }
-
-    public void saveBusinessCard(){
-        Toast.makeText(
-                CreateNewActivity.this,
-                "zjebało się",
-                Toast.LENGTH_SHORT
-        ).show();
+//
+//    public void saveBusinessCard(){
+//        Toast.makeText(
+//                CreateNewActivity.this,
+//                "zjebało się",
+//                Toast.LENGTH_SHORT
+//        ).show();
 
 //        byte[] image = convertImageViewToByteArray(selectedImageView);
 //        factory = new DatabaseFactory(this);
@@ -94,23 +95,23 @@ public class CreateNewActivity extends AppCompatActivity {
 //            if(factory.update(1, title.toString(), phone.toString(), address.toString(), description.toString(), image))
 //                Toast.makeText(this, "successfully updated", Toast.LENGTH_SHORT).show();
 //        }
-    }
+//    }
 
 
 
 
 
-    private void takePictureFromGallery(){
+    public void takePictureFromGallery(){
         Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(pickPhoto, 1);
     }
-
-    private void takePictureFromCamera(){
-        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(takePicture.resolveActivity(getPackageManager()) != null){
-            startActivityForResult(takePicture, 2);
-        }
-    }
+//
+//    private void takePictureFromCamera(){
+//        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if(takePicture.resolveActivity(getPackageManager()) != null){
+//            startActivityForResult(takePicture, 2);
+//        }
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -143,24 +144,24 @@ public class CreateNewActivity extends AppCompatActivity {
         }
     }
 
-    private boolean checkAndRequestPermissions(){
-        if(Build.VERSION.SDK_INT >= 23){
-            int cameraPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
-            if(cameraPermission == PackageManager.PERMISSION_DENIED){
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 20);
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == 20 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            takePictureFromCamera();
-        }
-        else
-            Toast.makeText(this, "Permission not Granted", Toast.LENGTH_SHORT).show();
-    }
+//    private boolean checkAndRequestPermissions(){
+//        if(Build.VERSION.SDK_INT >= 23){
+//            int cameraPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+//            if(cameraPermission == PackageManager.PERMISSION_DENIED){
+//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 20);
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+//
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if(requestCode == 20 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+//            takePictureFromCamera();
+//        }
+//        else
+//            Toast.makeText(this, "Permission not Granted", Toast.LENGTH_SHORT).show();
+//    }
 }
