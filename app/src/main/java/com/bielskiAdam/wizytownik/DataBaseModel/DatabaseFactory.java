@@ -9,10 +9,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 
-public class DatabaseFactory extends SQLiteOpenHelper {
+public class    DatabaseFactory extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 9;
-    private static final String DATABASE_NAME = "businesscard4.db";
+    private static final int DATABASE_VERSION = 10;
+    private static final String DATABASE_NAME = "businesscard.db";
     private static final String TABLE_NAME = "businesscard";
     private static final String COLUMN_ID = "_id";
     private static final String COLUMN_TITLE = "title";
@@ -30,7 +30,7 @@ public class DatabaseFactory extends SQLiteOpenHelper {
         String CREATE_TABLE = "CREATE TABLE "
                 + TABLE_NAME
                 + "("
-                + COLUMN_ID + " INTEGER PRIMARY KEY,"
+                + COLUMN_ID + " INTEGER PRIMARY KEY NOT NULL,"
                 + COLUMN_TITLE + " TEXT,"
                 + COLUMN_PHONE_NUMBER + " TEXT,"
                 + COLUMN_ADDRESS + " TEXT,"
@@ -38,12 +38,6 @@ public class DatabaseFactory extends SQLiteOpenHelper {
                 + COLUMN_IMAGE + " BLOB"
                 + ")";
         db.execSQL(CREATE_TABLE);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-        onCreate(db);
     }
 
     public ArrayList<BusinessCard> listBusinessCards() {
@@ -65,6 +59,12 @@ public class DatabaseFactory extends SQLiteOpenHelper {
         }
         cursor.close();
         return storeCards;
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
     }
 
     public void addCard(BusinessCard businessCard){

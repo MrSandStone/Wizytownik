@@ -8,16 +8,22 @@
     app:cardCornerRadius="20dp"
     android:layout_margin="15dp"
     app:cardElevation="10dp">
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_margin="15dp"
-            android:layout_height="wrap_content">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/layoutCardView"
+            android:layout_gravity="center">
             <ImageView
                 android:id="@+id/idCardImage"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:contentDescription="Backgroud business card"
                 tools:ignore="HardcodedText" />
             <LinearLayout
@@ -34,20 +40,21 @@
                     android:text="Title"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    tools:ignore="HardcodedText" />
+                    tools:ignore="HardcodedText"
+                    android:textColor="@color/design_default_color_error"/>
                 <TextView
                     android:id="@+id/cardPhoneNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Phone Number"
-                    android:textSize="10sp"
+                    android:textSize="15sp"
                     tools:ignore="HardcodedText" />
                 <TextView
                     android:id="@+id/cardAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Address"
-                    android:textSize="10sp"
+                    android:textSize="15sp"
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
@@ -63,33 +70,53 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Description"
-                    android:textSize="10sp"
+                    android:textSize="15sp"
                     tools:ignore="HardcodedText" />
 
-                <Button
-                    android:id="@+id/cardButtonEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:text="Edytuj"
-                    android:textSize="10sp"
-                    tools:ignore="HardcodedText" />
-
-                <Button
-                    android:id="@+id/cardButtonDelete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:text="Usuń"
-                    android:textSize="10sp"
-                    tools:ignore="HardcodedText" />
             </LinearLayout>
-            <LinearLayout
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <Button
+                android:id="@+id/cardButtonEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_margin="10dp"/>
+                android:layout_gravity="bottom"
+                android:text="Edytuj"
+                android:textSize="10sp"
+                tools:ignore="HardcodedText"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
 
-        </FrameLayout>
+            <Button
+                android:id="@+id/cardButtonDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="Usuń"
+                android:textSize="10sp"
+                tools:ignore="HardcodedText"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
+
+            <Button
+                android:id="@+id/cardButtonSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="Zapisz"
+                android:textSize="10sp"
+                tools:ignore="HardcodedText"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
+        </LinearLayout>
+    </LinearLayout>
 </androidx.cardview.widget.CardView>

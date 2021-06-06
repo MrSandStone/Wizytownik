@@ -1,28 +1,45 @@
 package com.bielskiAdam.wizytownik;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bielskiAdam.wizytownik.DataBaseModel.BusinessCard;
 import com.bielskiAdam.wizytownik.DataBaseModel.DataConverter;
 import com.bielskiAdam.wizytownik.DataBaseModel.DatabaseFactory;
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
+
+
+
+
 
 public class BusinessCardRecycler extends RecyclerView.Adapter<BusinessCardViewHolder> implements Filterable {
 
@@ -30,6 +47,7 @@ public class BusinessCardRecycler extends RecyclerView.Adapter<BusinessCardViewH
     private ArrayList<BusinessCard> listCards;
     private ArrayList<BusinessCard> mArrayList;
     private DatabaseFactory mDatabase;
+
 
     BusinessCardRecycler(Context context, ArrayList<BusinessCard> listCards){
         this.context = context;
@@ -39,7 +57,7 @@ public class BusinessCardRecycler extends RecyclerView.Adapter<BusinessCardViewH
     }
 
     @Override
-    public BusinessCardViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public BusinessCardViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_iteam_layout, viewGroup, false);
         return new BusinessCardViewHolder(view);
     }
@@ -54,11 +72,11 @@ public class BusinessCardRecycler extends RecyclerView.Adapter<BusinessCardViewH
         holder.imageView.setImageBitmap(DataConverter.convertByteArrayToBitmap(businessCard.getImage()));
 
         holder.cardButtonEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                editCard(businessCard);
-            }
-        });
+                @Override
+                public void onClick(View view) {
+                    editCard(businessCard);
+                }
+            });
 
         holder.cardButtonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +86,15 @@ public class BusinessCardRecycler extends RecyclerView.Adapter<BusinessCardViewH
                 context.startActivity(((Activity) context).getIntent());
             }
         });
+
+        holder.cardButtonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveLayout(holder.layoutCardView);
+            }
+        });
     }
+
 
     public Filter getFilter() {
         return new Filter() {
@@ -104,6 +130,8 @@ public class BusinessCardRecycler extends RecyclerView.Adapter<BusinessCardViewH
         return listCards.size();
     }
 
+    ImageView selectedImageView;
+
     private void editCard(final BusinessCard businessCard) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View subView = inflater.inflate(R.layout.activity_create_new, null);
@@ -114,20 +142,33 @@ public class BusinessCardRecycler extends RecyclerView.Adapter<BusinessCardViewH
         final EditText descritpionField = subView.findViewById(R.id.editTextTextDescription);
         final ImageView imageField = subView.findViewById(R.id.selectedImage);
 
-        if(businessCard != null) {
+        final Button takePictureButton = subView.findViewById(R.id.takePicture);
+
+        selectedImageView = imageField;
+
+        takePictureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Activity origin = (Activity)context;
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                origin.startActivityForResult(pickPhoto, 1);
+            }
+        });
+
+        if (businessCard != null) {
             titleField.setText(businessCard.getTitle());
             phoneField.setText(String.valueOf(businessCard.getPhoneNumber()));
             addressField.setText(businessCard.getAddress());
             descritpionField.setText(businessCard.getDescription());
-            //imageField.setImageBitmap(DataConverter.convertByteArrayToBitmap(businessCard.getImage()));
+            imageField.setImageBitmap(DataConverter.convertByteArrayToBitmap(businessCard.getImage()));
         }
 
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        androidx.appcompat.app.AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Edycja");
         builder.setView(subView);
         builder.create();
-        builder.setPositiveButton("Edycja", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Edytuj", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -137,25 +178,56 @@ public class BusinessCardRecycler extends RecyclerView.Adapter<BusinessCardViewH
                 final String description = descritpionField.getText().toString();
                 final byte[] image = DataConverter.convertImageViewToByteArray(imageField);
 
-
-                if(TextUtils.isEmpty(title)){
-                    Toast.makeText(
-                            context,
-                            "Sprawdź poprawność wartości",
-                            Toast.LENGTH_SHORT
-                    ).show();
+                if (TextUtils.isEmpty(title)) {
+                    Toast.makeText(context, "Something went wrong. Check your input values", Toast.LENGTH_LONG).show();
                 } else {
                     mDatabase.updateCard(new BusinessCard(Objects.requireNonNull(businessCard).getId(), title, phone, address, description, image));
                     ((Activity) context).finish();
                     context.startActivity(((Activity) context).getIntent());
+
                 }
             }
         });
         builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(context, "Anulowano", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Anulowano",Toast.LENGTH_LONG).show();
             }
         });
+        builder.show();
     }
+
+    public void saveLayout(FrameLayout frameLayout) {
+        frameLayout.setDrawingCacheEnabled(true);
+        Bitmap bitmap = frameLayout.getDrawingCache();
+        File storageLoc = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss");
+        Date now = new Date();
+        String fileName = formatter.format(now);
+
+        File file = new File(storageLoc, "wizytownik_" + fileName + ".jpg");
+        try{
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+            fileOutputStream.close();
+
+            scanFile(context, Uri.fromFile(file));
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        Toast.makeText(context, "Zapisano na urządzeniu", Toast.LENGTH_LONG).show();
+    }
+
+    private static void scanFile(Context context, Uri imageUri){
+        Intent scanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        scanIntent.setData(imageUri);
+        context.sendBroadcast(scanIntent);
+    }
+
 }
